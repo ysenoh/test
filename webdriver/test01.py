@@ -46,6 +46,37 @@ class Test1(unittest.TestCase):
             element = driver.find_element_by_id(id)
             self.assertEqual(element.text, 'TEXT1 TEXT2')
         
+
+    def test_03(self):
+        """ 複数のspanタグで構成された要素のtext()の値のテスト 
+        """
+
+        # 子要素のタグ内のテキストは結合される
+        element = driver.find_element_by_id('ID03_1')
+        self.assertEqual(element.text, 'TEXT1TEXT2')
+
+        # spanタグの間空白がある場合、その空白も入る
+        element = driver.find_element_by_id('ID03_2')
+        self.assertEqual(element.text, 'TEXT1 TEXT2')
+
+        # spanタグの間改行がある場合、空白が入る
+        element = driver.find_element_by_id('ID03_3')
+        self.assertEqual(element.text, 'TEXT1 TEXT2')
+
+
+    def test_03(self):
+        """ 複数のdivタグで構成された要素のtext()の値のテスト 
+        """
+
+        # divタグのテキストは改行で結合される。
+        # HTMLでは空行があってもそれは無視される。
+
+        element = driver.find_element_by_id('ID04_1')
+        self.assertEqual(element.text, 'TEXT1\nTEXT2')
+
+        element = driver.find_element_by_id('ID04_2')
+        self.assertEqual(element.text, 'TEXT1\nTEXT2')
+
         
 if __name__ == '__main__':
     unittest.main()
