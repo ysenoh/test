@@ -1,5 +1,7 @@
 #  --*-coding:utf-8-*--
 
+import sys
+import io
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -8,6 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.alert import Alert
 
+sys.stderr = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 driver = None
 
@@ -23,7 +26,7 @@ def tearDownModule():
     driver.close()
 
 
-class Test1(unittest.TestCase):
+class TestXPath(unittest.TestCase):
     def test_01(self):
         """idが ID01である table要素 で、1列目のテキストが"Panama"である行の
         2列目の td要素を取得するテスト
@@ -35,7 +38,9 @@ class Test1(unittest.TestCase):
         self.assertEqual(elements[0].text, '68')
 
 
-    def test_02(self):
+
+class TestTextFunc(unittest.TestCase):
+    def test_01(self):
         """ <br/> は改行文字に、&nbsp; はスペースに、
         連続するスペースは１つのスペースとして戻されることのテスト """
 
@@ -47,7 +52,7 @@ class Test1(unittest.TestCase):
             self.assertEqual(element.text, 'TEXT1 TEXT2')
         
 
-    def test_03(self):
+    def test_02(self):
         """ 複数のspanタグで構成された要素のtext()の値のテスト 
         """
 
@@ -64,7 +69,7 @@ class Test1(unittest.TestCase):
         self.assertEqual(element.text, 'TEXT1 TEXT2')
 
 
-    def test_04(self):
+    def test_03(self):
         """ 複数のdivタグで構成された要素のtext()の値のテスト 
         """
 
