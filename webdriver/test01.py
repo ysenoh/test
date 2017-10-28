@@ -64,7 +64,7 @@ class Test1(unittest.TestCase):
         self.assertEqual(element.text, 'TEXT1 TEXT2')
 
 
-    def test_03(self):
+    def test_04(self):
         """ 複数のdivタグで構成された要素のtext()の値のテスト 
         """
 
