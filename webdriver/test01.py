@@ -38,8 +38,23 @@ class TestXPath(unittest.TestCase):
         self.assertEqual(elements[0].text, '68')
 
 
+    def test_02(self):
+        """ classと数値で絞り込んだ場合のテスト。
+        """
 
-class TestTextFunc(unittest.TestCase):
+        element = driver.find_element_by_xpath(
+            '//div[@id="ID05"]/span[1]')
+        self.assertEqual(element.text, 'TEXT1')
+
+        element = driver.find_element_by_xpath(
+            '//div[@id="ID05"]/span[@class="CLASS3"][1]')
+        self.assertEqual(element.text, 'TEXT2')
+
+        # '//div[@id="ID05"]/span[1][@class="CLASS3"]'だと
+        # 要素が見つからず、タイムアウトになる。
+
+
+class TestText(unittest.TestCase):
     def test_01(self):
         """ <br/> は改行文字に、&nbsp; はスペースに、
         連続するスペースは１つのスペースとして戻されることのテスト """
@@ -81,6 +96,18 @@ class TestTextFunc(unittest.TestCase):
 
         element = driver.find_element_by_id('ID04_2')
         self.assertEqual(element.text, 'TEXT1\nTEXT2')
+
+
+class TestFind(unittest.TestCase):
+    def test_01(self):
+        """ find_element_by_class_name は複数のクラスが指定されている場合の要素の取得。
+        """
+ 
+        element = driver.find_element_by_class_name("CLASS1")
+        self.assertEqual(element.text, 'TEXT1')
+
+        element = driver.find_element_by_class_name("CLASS2")
+        self.assertEqual(element.text, 'TEXT1')
 
         
 if __name__ == '__main__':
