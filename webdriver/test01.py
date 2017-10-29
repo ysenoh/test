@@ -124,5 +124,17 @@ class TestFind(unittest.TestCase):
         self.assertEqual(element.text, 'TEXT1')
 
         
+
+class TestAttribute(unittest.TestCase):
+    def test_01(self):
+        """ innerHTMLの取得。
+        """
+
+        element = driver.find_element_by_id('ID07')
+        self.assertEqual(
+            element.get_attribute('innerHTML'),
+            '\n<span>TEXT</span>\n')
+
+
 if __name__ == '__main__':
     unittest.main()
