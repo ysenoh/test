@@ -54,6 +54,20 @@ class TestXPath(unittest.TestCase):
         # 要素が見つからず、タイムアウトになる。
 
 
+    def test_03(self):
+        """ 属性値の有無による判定
+        """
+
+        element = driver.find_element_by_xpath(
+            '//div[@id="ID06"]/a[boolean(@href)]')
+        self.assertEqual(element.text, 'ANCHOR1')
+
+        element = driver.find_element_by_xpath(
+            '//div[@id="ID06"]/a[not(boolean(@href))]')
+        self.assertEqual(element.text, 'ANCHOR2')
+
+
+
 class TestText(unittest.TestCase):
     def test_01(self):
         """ <br/> は改行文字に、&nbsp; はスペースに、
