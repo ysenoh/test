@@ -67,6 +67,42 @@ class TestXPath(unittest.TestCase):
         self.assertEqual(element.text, 'ANCHOR2')
 
 
+    def test_04(self):
+        """ xpathにおける text() と . の違いの確認
+        """
+
+        # text() は、その要素の直下のテキストのみ
+
+        elements = driver.find_elements_by_xpath(
+            '//div[@id="ID08"]//div[text()="ID08 TEXT"]')
+        self.assertEqual(len(elements), 1)
+        self.assertEqual(elements[0].get_attribute('id'), 'ID08_1')
+
+        # . は、その子の要素も含む
+
+        elements = driver.find_elements_by_xpath(
+            '//div[@id="ID08"]//div[.="ID08 TEXT"]')
+        self.assertEqual(len(elements), 2)
+        self.assertSetEqual(
+            set(elm.get_attribute('id') for elm in elements),
+            {'ID08_1', 'ID08_2'})
+
+        # <div id="ID08_3">ID08 TEXTA<span> SUB ELEMENT </span>TEXTB</div>
+        # において、
+        # text() 最初の1つのみのテキスト。"ID08 TEXTA"
+        # text()[2]は2つめのテキスト。"TEXTB"
+
+        elements = driver.find_elements_by_xpath(
+            '//div[@id="ID08"]//div[text()="ID08 TEXTA"]')
+        self.assertEqual(len(elements), 1)
+        self.assertEqual(elements[0].get_attribute('id'), 'ID08_3')
+
+        elements = driver.find_elements_by_xpath(
+            '//div[@id="ID08"]//div[text()[2]="TEXTB"]')
+        self.assertEqual(len(elements), 1)
+        self.assertEqual(elements[0].get_attribute('id'), 'ID08_3')
+
+
 
 class TestText(unittest.TestCase):
     def test_01(self):
