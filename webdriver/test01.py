@@ -148,7 +148,7 @@ class TestText(unittest.TestCase):
         self.assertEqual(element.text, 'TEXT1\nTEXT2')
 
 
-class TestFind(unittest.TestCase):
+class TestFindByClass(unittest.TestCase):
     def test_01(self):
         """ find_element_by_class_name は複数のクラスが指定されている場合の要素の取得。
         """
