@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script>
+function test() {
+    window.setTimeout(
+        function() {
+            var element = document.getElementById('ID01')
+            element.innerHTML = 
+                '<span id="ID02"><span class="CLASS">TEXT</span></span>';
+        }, 2000)
+}
+
+</script>
+
+<body onLoad="test()">
+<span id="ID01"><span id="ID02"></span></span>
+</body>
