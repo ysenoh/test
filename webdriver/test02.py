@@ -23,7 +23,7 @@ def setUpModule():
 
 def tearDownModule():
     global driver
-    driver.close()
+    # driver.close()
 
 
 class TestOverwrite(unittest.TestCase):
@@ -72,6 +72,20 @@ class TestOverwrite(unittest.TestCase):
         with self.assertRaises(Exceptions.StaleElementReferenceException):
             element1.is_enabled()
         
+
+class TestTimezone(unittest.TestCase):
+
+    @unittest.skip("仕様がよくわからない")
+    def test_01(self):
+
+        # timezone設定がローカルと異なっている。
+        # UTCとも違うらしい。(-60と出力される)
+
+        driver.get('http://localhost/test02.html')
+        element = driver.find_element_by_id('TZ_OFFSET')
+
+        
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -4,17 +4,25 @@
 </head>
 
 <script>
-function test() {
+window.onload = function() {
     window.setTimeout(
         function() {
-            var element = document.getElementById('ID01')
+            var element = document.getElementById('ID01');
             element.innerHTML = 
                 '<span id="ID02"><span class="CLASS">TEXT</span></span>';
-        }, 2000)
-}
+        }, 2000);
+
+    var d = new Date();
+    var element = document.getElementById('ID03');
+    element.innerHTML =
+        '<span id="TZ_OFFSET">' +  d.getTimezoneOffset() + 
+        '</span>';
+};
 
 </script>
 
-<body onLoad="test()">
-<span id="ID01"><span id="ID02"></span></span>
+<body>
+<div><span id="ID01"></span></div>
+<div id="ID03"></div>
+
 </body>
