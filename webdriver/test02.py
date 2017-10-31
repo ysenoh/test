@@ -23,7 +23,7 @@ def setUpModule():
 
 def tearDownModule():
     global driver
-    # driver.close()
+    driver.close()
 
 
 class TestOverwrite(unittest.TestCase):
