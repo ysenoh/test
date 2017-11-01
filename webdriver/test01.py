@@ -103,6 +103,33 @@ class TestXPath(unittest.TestCase):
         self.assertEqual(elements[0].get_attribute('id'), 'ID08_3')
 
 
+    def test_05(self):
+        """ 親階層が異なる要素に対するn番目の参照
+        """
+
+        # <div id="ID09">
+        # <div><span>TEXT1</span></div>
+        # <span><span>TEXT2</span><span>TEXT3</span></span>
+        # <span>TEXT4</span>
+        # </div>
+
+        # 規則が良くわからない。
+        # 環境に依存する可能性もあるのではないか。
+        # // で展開された親が異なる要素に対してn番目の参照はすべきではないらしい。
+
+        elements = driver.find_elements_by_xpath(
+            '//div[@id="ID09"]//span')
+
+        element = driver.find_element_by_xpath(
+                '//div[@id="ID09"]//span[1]')
+        self.assertEqual(element.text, 'TEXT1')
+
+        element = driver.find_element_by_xpath(
+                '//div[@id="ID09"]//span[2]')
+        self.assertEqual(element.text, 'TEXT3')
+
+        # '//div[@id="ID09"]//span[3]' はタイムアウト
+
 
 class TestText(unittest.TestCase):
     def test_01(self):
