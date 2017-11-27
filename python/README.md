@@ -13,7 +13,9 @@ globalと同じようなスコープで管理されているっぽい。
 
 # TEST02: Pythonのマルチバイト文字のstdout出力
 以下の設定をするのが簡単な様である。
+```
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+```
 
 sys.stdout は　io.TextIOWrapper のインスタンスであり、
 これは io.TextIOBase を継承している。  
