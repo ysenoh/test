@@ -8,5 +8,6 @@ JavaScriptにおいて、グローバルな変数は、windowオブジェクト�
 エラーにもならない。
 
 サンプルコード: [test01.html](test01.html)
+windowオブジェクトのプロパティ一覧: [test01_properties.txt](test01_properties.txt)
 
 
