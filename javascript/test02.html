@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script>
+var flag = false;
+
+window.onload = function() {
+    var element2 = document.getElementById("ID02");
+    element2.focus();
+    
+    window.setTimeout(
+        function() {
+            var element1 = document.getElementById("ID01");
+            element1.style.display = "none";
+            flag = true;
+        }, 1000);
+};
+
+
+function onBlur() {
+    console.log(flag); // trueが出力されるのが正しいはず
+};
+
+</script>
+
+<body>
+<div id="ID01"><input id="ID02" type="text" onBlur="onBlur()"/></div>
+</body>
