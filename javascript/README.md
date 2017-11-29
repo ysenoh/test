@@ -8,7 +8,6 @@ JavaScriptにおいて、グローバルな変数は、windowオブジェクト�
 エラーにもならない。
 
 + サンプルコード: [test01.html](test01.html)
-+ windowオブジェクトのプロパティ一覧: [test01_properties.txt](test01_properties.txt)
 
 
 # TEST02: styleの変更とイベントハンドラの呼出タイミング
@@ -21,3 +20,14 @@ JavaScriptにおいて、グローバルな変数は、windowオブジェクト�
 1. その設定処理が完了する前にonBlurイベントハンドラが呼び出される。
 
 + サンプルコード: [test02.html](test02.html)
+
+
+# TEST03: 値を変更できないプロパティ
+Object.defineProperties でプロパティのwritableディスクリプタにfalseを設定すると、そのプロパティは値を変更できない。  
+また、prototypeに対して同様な設定をしたプロパティを設定すると、そのprototype に対してだけでなく、オブジェクトの属性値としても値を変更できない。  
+値を代入してもエラーも出ないので、非常に危うい。  
+
+このディスクリプタにはwritable以外にも色々ある。  
+[MDN: Object.defineProperties()](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties)
+
++ サンプルコード: [test03.js](test03.js)
