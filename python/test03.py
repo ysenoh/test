@@ -1,0 +1,43 @@
+import time
+import itertools
+
+N = 1000000
+
+def test1():
+    a = list(range(N))
+
+    t0 = time.time()
+    for i in range(100):
+        sum(a[1:])
+
+    t1 = time.time()
+    print(t1 - t0)
+
+
+def test2():
+    a = list(range(N))
+
+    t0 = time.time()
+    b = a[1:]
+    for i in range(100):
+        sum(b)
+
+    t1 = time.time()
+    print(t1 - t0)
+
+
+def test3():
+    a = list(range(N))
+    assert sum(itertools.islice(a, 1, len(a))) == N*(N-1)//2
+
+    t0 = time.time()
+    for i in range(100):
+        sum(itertools.islice(a, 1, len(a)))
+
+    t1 = time.time()
+    print(t1 - t0)
+
+
+test1()
+test2()
+test3()
