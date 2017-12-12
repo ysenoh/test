@@ -23,9 +23,27 @@ bufferは、根底のバイナリバッファである、 io.BufferedIOBase の�
 
 + サンプルコード: [encoding.py](encoding.py)
 
+
+
 # <a name="TEST03">TEST03: 配列の切り出しのコスト
 pythonで a[1:] の様な操作をした場合のコストが気になったので、簡単に調査。  
 やはりこれは配列のコピー操作なので、ちょっと重い。  
 気になる場合は、[itertools.islice](https://docs.python.jp/3/library/itertools.html#itertools.islice)を使うと、イテレータとして処理できるらしい。  
 
+イテレータにすれば良いのかと思って、(a[i] for i in rage(1, len(a))) の様に書いたところ却って遅かった。(test03.test4)  
+やはり単純に配列としてアクセスすると遅い。  
+
 + サンプルコード: [test03.py](test03.py)
+
+
+
+
+# <a name="TEST04">TEST04: importの実行
++ importは関数内でも実行できる
++ その名前の解決は、その関数内でのみ有効である
+  + その関数から呼び出している関数内では使用できない
++ 2回importしてもステートメントは1回しか実行されない
+  + 異なる関数内で呼び出した場合もそう
+ 
++ サンプルコード: [test04.py](test04.py) [test04sub.py](test04sub.py)
+
