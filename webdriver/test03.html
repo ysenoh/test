@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script>
+window.onload = function() {
+    var d = new Date();
+
+    var element = document.getElementById('ID01');
+
+    element.innerHTML =
+        '<span id="TZ_OFFSET">' +  d.getTimezoneOffset() + 
+        '</span>';
+};
+    
+
+</script>
+
+<body>
+<span id="ID01"></span>
+</body>

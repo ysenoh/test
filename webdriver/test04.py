@@ -15,6 +15,10 @@ from selenium.common.exceptions import WebDriverException
 
 sys.stderr = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
+# implicitly_wait が設定されていて、waitで指定しているwaitが0の場合、
+# 10sec待つ場合と、待たない場合がある件のテストコード
+# だから、両方共ちゃんと設定する必要が有る。
+
 
 def waitUntil(cond):
     t0 = time.time()

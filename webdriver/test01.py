@@ -200,6 +200,18 @@ class TestAttribute(unittest.TestCase):
             '\n<span>TEXT</span>\n')
 
 
+    def test_02(self):
+        """ inputのvalueの値の取得。
+        """
+
+        element = driver.find_element_by_id('ID11_1')
+        self.assertEqual(element.get_attribute("value"), 'TEXT')
+
+        # パスワードの場合も取得できる
+        element = driver.find_element_by_id('ID11_2')
+        self.assertEqual(element.get_attribute("value"), 'PASSWORD')
+
+
 class TestWait(unittest.TestCase):
     def test_01(self):
         """ text_to_be_present_in_element が部分一致であることの確認
@@ -213,6 +225,17 @@ class TestWait(unittest.TestCase):
             WebDriverWait(driver, 5).until(
                 EC.text_to_be_present_in_element(
                     (By.XPATH, '//div[@id="ID10"]'), 'TEXT3'))
+
+
+    def test_02(self):
+        WebDriverWait(driver, 5).until(
+            EC.text_to_be_present_in_element_value(
+                (By.ID, 'ID11_1'), 'TEXT'))
+
+        with self.assertRaises(Exceptions.TimeoutException):
+            WebDriverWait(driver, 5).until(
+                EC.text_to_be_present_in_element_value(
+                    (By.ID, 'ID11_1'), 'TEXT2'))
 
     
 

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<script>
+window.onload = function() {
+    var element = document.getElementById('ID01');
+
+    window.setTimeout(
+        function() {
+            element.value = '';
+
+            window.setTimeout(
+                function() {
+                    element.value = 'TEXT';
+                }, 3000);
+        }, 3000);
+};
+  
+
+</script>
+
+<body>
+<input id="ID01" type="text" value="TEXT"/><br/>
+</body>
+</html>

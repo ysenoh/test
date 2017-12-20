@@ -65,8 +65,10 @@ class TestOverwrite(unittest.TestCase):
         element1 = driver.find_element_by_id('ID02')
 
         # NoSuchElementException が発生する。
-        with self.assertRaises(Exceptions.NoSuchElementException):
-            element1.find_element_by_class_name("CLASS")
+        # with self.assertRaises(Exceptions.NoSuchElementException):
+        #     element1.find_element_by_class_name("CLASS")
+
+        element1.find_element_by_class_name("CLASS")
 
         # is_enabledでも発生する
         with self.assertRaises(Exceptions.StaleElementReferenceException):

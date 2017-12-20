@@ -1,53 +1,33 @@
-# Selenium/WebDriver 覚え書き
+# 概要
+WebDriverの動作に関する簡単なテスト。  
+大したことは書いてない。  
+正しいかどうかも良くわからない。  
+
+# TEST01: 基本的なテスト
+unittest形式で書いてあります。
+
++ [コード](test01.py) / [HTML](test.html)
+
+# TEST02: 
+何だったか失念。  
+無理そうなことをやって、やっぱり無理だったやつだと思う。  
+unittest形式で書いてあります。  
+
++ [コード](test02.py) / [HTML](test02.html)
+
+# TEST04: implicit_wait と waitの関係のテスト
+untilによるwaitでは、implicit_waitが効く場合と効かない場合がある。  
+
++ [コード](test04.py) / [HTML](test.html)
 
 
-+ [Selenium with Python マニュアル(英語)](http://selenium-python.readthedocs.io/index.html)
+# TEST05: selectの選択操作
+option要素を取得してclick()すれば良い。
+
++ [コード](test05.py) / [HTML](test05.html)
 
 
-## titleによるwait
-```
-    WebDriverWait(driver, 10).until(
-        EC.title_contains('TITLEの一部'))
-```
+# TEST06: inputのvalueの完全一致によるwait(ユーザ定義のExpectedCondition)
+text_to_be_present_in_element_value は、部分一致なので、完全一致でwaitする場合は、自作する必要が有る。
 
-## xpathによる指定
-
-クラス名でspanタグを指定して、その中のcheckboxを取得する
-```
-    element = driver.find_element_by_xpath(
-        '//span[@class="完全なクラス名属性値"]//input[@type="checkbox"]')
-```
-
-
-クラス名の一部で inputを取得する
-```
-    element = driver.find_element_by_xpath(
-        '//input[contains(@class, "クラス名属性値の一部")]')
-```
-
-+ [(MSDN)contains 関数 (XPath)](https://msdn.microsoft.com/ja-jp/library/ms256195(v=vs.120).aspx)
-
-
-あるクラスか、別なクラスのspanタグのどちらか存在する方を取得する。
-```
-    element = driver.find_element_by_xpath(
-        '//span[@class="クラス名1"]|//span[@class="クラス名2"]')
-```
-
-取得した要素以下から要素を取得する。
-```
-    parentElement = driver.find_element_by_xpath(
-        '//span[@class="クラス名"]')
-    childElement = parentEleme.find_element_by_xpath(
-        './/input')
-```
-つまり、xpathの先頭 '.'を付加する。  
-'//' で始めると、ドキュメント全体から検索されることに注意する。  
-
-
-
-## Alert/Dialogの操作
-```
-    Alert(driver).accept()
-    Alert(driver).dismiss()
-```
++ [コード](test06.py) / [HTML](test06.html)
