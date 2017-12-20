@@ -28,6 +28,8 @@ option要素を取得してclick()すれば良い。
 
 
 # TEST06: inputのvalueの完全一致によるwait(ユーザ定義のExpectedCondition)
-text_to_be_present_in_element_value は、部分一致なので、完全一致でwaitする場合は、自作する必要が有る。
+text_to_be_present_in_element_value は、部分一致なので、完全一致でwaitする場合は、自作する必要が有る。  
+初期状態ではinputのテキストボックスに TEXT と表示されており、3sec後に空になり、更に3sec後に再度TEXTと設定される。(WebDriverではなく、JavaScriptによる動作)  
+それと連動して、webdriverのコードは、test06:1、test06:2、test06:3 と表示する。
 
 + [コード](test06.py) / [HTML](test06.html)
