@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.alert import Alert
+from selenium.common import exceptions as Exceptions
 
 sys.stderr = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
@@ -197,6 +198,23 @@ class TestAttribute(unittest.TestCase):
         self.assertEqual(
             element.get_attribute('innerHTML'),
             '\n<span>TEXT</span>\n')
+
+
+class TestWait(unittest.TestCase):
+    def test_01(self):
+        """ text_to_be_present_in_element が部分一致であることの確認
+        """
+
+        WebDriverWait(driver, 5).until(
+            EC.text_to_be_present_in_element(
+                (By.XPATH, '//div[@id="ID10"]'), 'TEXT1'))
+
+        with self.assertRaises(Exceptions.TimeoutException):
+            WebDriverWait(driver, 5).until(
+                EC.text_to_be_present_in_element(
+                    (By.XPATH, '//div[@id="ID10"]'), 'TEXT3'))
+
+    
 
 
 if __name__ == '__main__':
