@@ -37,10 +37,10 @@ text_to_be_present_in_element_value は、部分一致なので、完全一致�
 + [コード](test06.py) / [HTML](test06.html)
 
 
-# TEST07: windowの状態とfocus/blurの動作
+# TEST07: ブラウザの状態とfocus/blurの動作
 少なくともFirefoxは、ブラウザがactive windowとして表示されていないと、focus/blurイベントが発生しないらしい。  
 つまり、WebDriverによるテストで、ブラウザを下に隠してしまうと、動作が変わってしまう。  
-EdgeやChromeでも、微妙な差はあれ、動作に影響があるようである。  
+EdgeやChromeでも、差はあれ、動作に影響があるようである。  
 その対策として、明示的に blurを実行するようにコードを書いたが、FirefoxとEdgeでは動作しなかった。  
 
 テストコードは、blurイベントでalertを表示するようにしている。  
@@ -48,3 +48,11 @@ EdgeやChromeでも、微妙な差はあれ、動作に影響があるようで�
 その5secの間に、Alt-tab操作などで、他のアプリをactiveにすると、alertが表示されず、タイム・アウトする。  
 
 + [コード](test07.py) / [HTML](test07.html)
+
+# TEST08: ブラウザのメソッドの戻り値を取得するテスト
+driver.execute_script の戻り値として、メソッドの戻り値を取得することができる。  
+ただし、その場合は、returnを付けて呼び出さないと、動作しないようである。  
+
++ [コード](test08.py) / [HTML](test08.html)
+
+
