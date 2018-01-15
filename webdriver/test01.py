@@ -163,7 +163,7 @@ class TestText(unittest.TestCase):
 
 
     def test_03(self):
-        """ 複数のdivタグで構成された要素のtext()の値のテスト 
+        """ 複数のdivタグで構成された要素のtextの値のテスト 
         """
 
         # divタグのテキストは改行で結合される。
