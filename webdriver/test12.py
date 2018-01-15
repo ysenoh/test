@@ -34,6 +34,8 @@ def tearDownModule():
 
 class MyTest(unittest.TestCase):
     def test01(self):
+        """ targetが _blankであるリンクのウィンドウ切り替えのテスト """
+
         driver.get('http://localhost/test12.html')
 
         numOfWins = len(driver.window_handles)
@@ -56,6 +58,8 @@ class MyTest(unittest.TestCase):
 
 
     def test02(self):
+        """ window.openで開いたウィンドウへの切り替えのテスト """
+
         driver.get('http://localhost/test12.html')
 
         numOfWins = len(driver.window_handles)
