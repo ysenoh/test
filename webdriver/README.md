@@ -83,6 +83,11 @@ xpathで、 //tr//td[1] と指定した時、FirefoxとChromeは全ての行の1
 
 
 # TEST12: 子ウィンドウの操作
-click操作をして、window_handlesの長さが変わるまで待って、その最後のhandleを使用して、ウィンドウを切り替える。
+click操作をして、window_handlesの長さが変わるまで待って、その最後のhandleを使用して、ウィンドウを切り替える。  
+
+動的にiframeを生成しても、それはウィンドウとしては扱われないらしい。(テストでは innerHTMLにiframeタグを設定している)  
+また、iframeから戻る場合は、switch_to.default_content() 等を使用する。  
+switch_to.window() では戻れなく、また子ウィンドウからはswitch_to.default_content()では戻れない。  
+
 
 + [コード](test12.py) / [HTML(親)](test12.html) / [HTML(子)](test12b.html)

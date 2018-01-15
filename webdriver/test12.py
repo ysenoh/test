@@ -14,22 +14,18 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-# _blankで開いたタブの取得のテスト
-
-
 driver = None
 
 def setUpModule():
     global driver
-    # driver = webdriver.Firefox()
+    driver = webdriver.Firefox()
     # driver = webdriver.Edge()
-    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome()
     driver.implicitly_wait(10)
 
 
 def tearDownModule():
     driver.close()
-
 
 
 class MyTest(unittest.TestCase):
@@ -57,6 +53,7 @@ class MyTest(unittest.TestCase):
         self.assertEqual(element.text, 'PARENT WINDOW')
 
 
+
     def test02(self):
         """ window.openで開いたウィンドウへの切り替えのテスト """
 
@@ -80,6 +77,40 @@ class MyTest(unittest.TestCase):
         element = driver.find_element_by_id('TEXT1')
         self.assertEqual(element.text, 'PARENT WINDOW')
 
+
+
+    def test03(self):
+        driver.get('http://localhost/test12.html')
+
+        numOfFrames = getNumOfFrame()
+
+        driver.find_element_by_id('ID03').click()
+
+        WebDriverWait(driver, 5).until(
+            lambda d: getNumOfFrame() > numOfFrames)
+
+        iframes = driver.find_elements_by_xpath(
+            '//div[@class="iframe"]/iframe')
+
+        driver.switch_to.frame(iframes[-1])
+
+        element = driver.find_element_by_id('TEXT1')
+        self.assertEqual(element.text, 'CHILD WINDOW')
+        
+        driver.switch_to.default_content()
+
+        element = driver.find_element_by_id('TEXT1')
+        self.assertEqual(element.text, 'PARENT WINDOW')
+
+
+
+def getNumOfFrame():
+    driver.implicitly_wait(0)
+    n = len(driver.find_elements_by_xpath('//div[@class="iframe"]'))
+
+    driver.implicitly_wait(10)
+    return n
+    
 
 if __name__ == '__main__':
     unittest.main()
