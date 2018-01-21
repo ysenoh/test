@@ -9,7 +9,7 @@ Pythonでもクラス変数は定義できる。
 ただし、インスタンスの変数として代入すると、別の変数として管理される。  
 globalと同じようなスコープで管理されているっぽい。  
 
-コード [test_class.py](test_class.py)
+コード: [test_class.py](test_class.py)
 
 # TEST02: Pythonのマルチバイト文字のstdout出力
 以下の設定をするのが簡単な様である。
@@ -21,7 +21,7 @@ sys.stdout は　io.TextIOWrapper のインスタンスであり、
 これは io.TextIOBase を継承している。  
 bufferは、根底のバイナリバッファである、 io.BufferedIOBase のインスタンスである。  
 
-コード [encoding.py](encoding.py)
+コード: [encoding.py](encoding.py)
 
 
 
@@ -33,7 +33,7 @@ pythonで a[1:] の様な操作をした場合のコストが気になったの�
 イテレータにすれば良いのかと思って、(a[i] for i in rage(1, len(a))) の様に書いたところ却って遅かった。(test03.test4)  
 やはり単純に配列としてアクセスすると遅い。  
 
-コード [test03.py](test03.py)
+コード: [test03.py](test03.py)
 
 
 
@@ -46,7 +46,7 @@ importは関数内でも実行できる。
 2回importしてもステートメントは1回しか実行されない。  
 異なる関数内で呼び出した場合もそう。  
  
-コード [test04.py](test04.py) [test04sub.py](test04sub.py)
+コード: [test04.py](test04.py) [test04sub.py](test04sub.py)
 
 
 # <a name="TEST05">TEST05: 引数のデフォルト値が決定されるタイミング
@@ -57,9 +57,9 @@ importは関数内でも実行できる。
 オブジェクトであっても、変数に上書きした場合は同様。  
 ただし、変数ではなく、そのインスタンス自身を更新した場合は、それが反映される。  
  
-コード [test05.py](test05.py)
+コード: [test05.py](test05.py)
 
 # TEST07: overrideされないメソッド
-__ で始まるメソッドはoverrideされないことの確認。[9.6. プライベート変数](https://docs.python.jp/3/tutorial/classes.html#private-variables)  
+__ で始まるメソッドはoverrideされないことの確認。([9.6. プライベート変数](https://docs.python.jp/3/tutorial/classes.html#private-variables))
 
-コード [test07.py](test07.py)
+コード: [test07.py](test07.py)
