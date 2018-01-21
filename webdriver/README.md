@@ -74,7 +74,7 @@ utf-8による、漢字とひらがなと絵文字の簡単なテスト。
 + [コード](test10.py) / [HTML](test10.html)
 
 
-# TEST11: Edgeのバグ？
+# TEST11: Edgeのバグ？(xpathによるテーブルの複数のセルの取得)
 xpathで、 //tr//td[1] と指定した時、FirefoxとChromeは全ての行の1列目を取得できるが、Edeのみ1行目の1列目を取得するようである。  
 尚、//tr//td だと、Edgeでも全ての行のセルを取得するので、多分これはEdgeのバグではないか。  
 
@@ -83,11 +83,27 @@ xpathで、 //tr//td[1] と指定した時、FirefoxとChromeは全ての行の1
 
 
 # TEST12: 子ウィンドウの操作
-click操作をして、window_handlesの長さが変わるまで待って、その最後のhandleを使用して、ウィンドウを切り替える。  
+子ウィンドウが開くと、window_handles の長さが変わる。  
+新規の子ウィンドウは一番最後に追加されるようである。  
+戻るには、switch_to.window()を使用する。
 
-動的にiframeを生成しても、それはウィンドウとしては扱われないらしい。(テストでは innerHTMLにiframeタグを設定している)  
-また、iframeから戻る場合は、switch_to.default_content() 等を使用する。  
-switch_to.window() では戻れなく、また子ウィンドウからはswitch_to.default_content()では戻れない。  
+動的にiframeを生成しても、それはウィンドウとしては扱われないらしい。  
+該当するiframe要素を配列で取得し、その個数で判別する。  
+戻るには、switch_to.default_content() を使用する。  
 
 
 + [コード](test12.py) / [HTML(親)](test12.html) / [HTML(子)](test12b.html)
+
+
+# TEST13: alertのacceptの完了タイミング
+Edgeの場合、alertのacceptの直後に find_element系の処理をすると、まだalertが表示されているものとして、UnexpectedAlertPresentException がraiseされることがある。  
+ただし、alertが2回連続して表示される場合に、2回連続してacceptとしても、これは正常に動作するようである。  
+多分、acceptはaccept可能になるまで内部的にwaitしており、既にacceptされたalertが表示されていても、それは無視されているのだと思う。  
+
+実装の都合として、alertが連続して表示されるか、そうでないかを区別して、手順を組むことはしたくない。  
+単純に、「alertが表示されなくなるまでwaitする」だと、そのwaitが入ったタイミングで既に2つめのalertが表示されている場合に、timeoutで終了してしまう可能性がある。  
+
+alertが連続して表示される場合、そのテキストは異なっているものとし、alertが存在しないか、そのテキストが異なるまでwaitする条件オブジェクトを定義した。
+
++ [コード](test13.py) / [HTML](test13.html)
+
