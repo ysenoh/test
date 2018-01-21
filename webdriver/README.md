@@ -105,5 +105,8 @@ Edgeの場合、alertのacceptの直後に find_element系の処理をすると�
 
 alertが連続して表示される場合、そのテキストは異なっているものとし、alertが存在しないか、そのテキストが異なるまでwaitする条件オブジェクトを定義した。
 
+なお、webdriverのAlertのコードを読むと、alertは個別には識別されておらず、driverに対して、カレントのalertの操作として実装されている。  
+そのため、alertが表示されていないかは判別できても、あるalertが閉じたかどうかは判別できないようである。  
+
 + [コード](test13.py) / [HTML](test13.html)
 
