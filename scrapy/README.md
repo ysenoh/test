@@ -42,12 +42,17 @@ pip3 install --upgrade google-auth-oauthlib
 + scrapy は、webページの内容をパースして、1ページ1件として、CSV等の形式で出力するものである。
   + ただし、そのパース処理(下記のcallbackで指定)の中でwebページの内容をファイル等に出力するコードを書くことも可能である。
 + 追跡するルールなどは、CrawlSpiderのサブクラスで定義する。
-  + このルールは、CrawlSpiderのサブクラスの allowed_domains、start_urls、rules というクラス変数に設定する。
+  + このルールは、CrawlSpiderのサブクラスの
+[allowed_domains](https://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spiders.Spider.allowed_domains)、
+[start_urls](https://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spiders.Spider.start_urls)、
+[rules](https://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spiders.CrawlSpider.rules) というクラス変数に設定する。
   + rulesには、[Rule](https://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spiders.Rule)の配列を設定する。
   + Ruleは、条件が成立した場合に、どうするかを設定するものである。
     + 条件は、LinkExtractor で指定する。これは[LxmlLinkExtractor](https://doc.scrapy.org/en/latest/topics/link-extractors.html#module-scrapy.linkextractors.lxmlhtml)の別名である。
-    + callbackを指定すると、そのcallback先でパース処理を行う。callbackはメソッド名を文字列で渡す。(文字列ではなくシンボルとしても渡せるらしいがよくわからない)
-    + follow に Trueを設定すると、その先のページも探査する。デフォルトでは、callbackが指定されていない場合は Trueとして扱われるが、指定されている場合は、Falseとして扱われることに注意する。
+    + callbackを指定すると、そのcallback先でパース処理を行う。  
+      callbackはメソッド名を文字列で渡す。(文字列ではなくシンボルとしても渡せるらしいがよくわからない)
+    + follow に Trueを設定すると、その先のページも探査する。  
+      デフォルトでは、callbackが指定されていない場合は Trueとして扱われるが、指定されている場合は、Falseとして扱われることに注意する。
 + scrapy crawl クロール名　で、クロールを実行できる
   + クロール名は、CrawlSpiderのサブクラスの nameというクラス変数に設定する。
 + CSV等で出力する項目は、[Item](https://doc.scrapy.org/en/latest/topics/items.html#item-objects) から継承したクラスで定義する
@@ -58,10 +63,10 @@ pip3 install --upgrade google-auth-oauthlib
 + item情報の出力を処理する場合は、[pipeline](https://doc.scrapy.org/en/latest/topics/item-pipeline.html#item-pipeline)
 を使用する。
   + 使用する pipelineのクラスは、[ITEM_PIPELINES](https://doc.scrapy.org/en/latest/topics/settings.html#item-pipelines) で指定する。
-+ scrapy コマンドを使用しないで、scrapyを使用するには、[CrawlerProcess](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.crawler.CrawlerProcess)を使用する。[Run Scrapy from a script](https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script)
++ scrapy コマンドを使用しないで、scrapyを使用するには、[CrawlerProcess](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.crawler.CrawlerProcess)を使用する。([Run Scrapy from a script](https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script))
   + この場合は、settings.py による、設定の初期化はされていないようである。
   + これは[Settings](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.settings.Settings)に設定して、それをCrawlerProcessに引き渡すことで行う。
-  + Settings も辞書型のように扱え、また代わりに辞書型のデータを与えても動作するらしいが、Settingsを使用すると名前の間違いなどを判定してくれるのだと思う。
+  + Settings も辞書型のように扱え、また辞書型のデータを与えても動作するらしいが、Settingsを使用すると名前の間違いなどを判定してくれるのだと思う。
 
 
 
