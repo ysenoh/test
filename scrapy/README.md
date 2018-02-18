@@ -40,7 +40,8 @@ pip3 install --upgrade google-auth-oauthlib
   + 待ち時間は、[DOWNLOAD_DELAY](https://doc.scrapy.org/en/latest/topics/settings.html#download-delay) で設定する。デフォルトは待たない。
   + 探査する深さの上限は[DEPTH_LIMIT](https://doc.scrapy.org/en/latest/topics/settings.html#depth-limit) で設定する。デフォルトは制限なし。
 + scrapy は、webページの内容をパースして、1ページ1件として、CSV等の形式で出力するものである。
-  + ただし、そのパース処理(下記のcallbackで指定)の中でwebページの内容をファイル等に出力するコードを書くことも可能である。
+  + ただし、そのパース処理(下記のcallbackで指定)の中でwebページの内容をファイル等に出力するコードを書くことも可能である。  
+    ファイル出力は pipelineでやるべきではないかとも思ったが、そのためにはHTMLをItemに入れて渡す必要があり、回りくどいだけにも思う。
 + 追跡するルールなどは、CrawlSpiderのサブクラスで定義する。
   + このルールは、CrawlSpiderのサブクラスの
 [allowed_domains](https://doc.scrapy.org/en/latest/topics/spiders.html#scrapy.spiders.Spider.allowed_domains)、
@@ -63,6 +64,8 @@ pip3 install --upgrade google-auth-oauthlib
 + item情報の出力を処理する場合は、[pipeline](https://doc.scrapy.org/en/latest/topics/item-pipeline.html#item-pipeline)
 を使用する。
   + 使用する pipelineのクラスは、[ITEM_PIPELINES](https://doc.scrapy.org/en/latest/topics/settings.html#item-pipelines) で指定する。
+  + scrapy startproject が生成するデフォルトのsettings.pyでは、コメントアウトされているので、使用する場合はコメントを解除する。
+  + これは、クラス名キーとした辞書型で管理されており、値には処理する順序を設定する。(パイプラインとして複数処理出来る)
 + scrapy コマンドを使用しないで、scrapyを使用するには、[CrawlerProcess](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.crawler.CrawlerProcess)を使用する。([Run Scrapy from a script](https://doc.scrapy.org/en/latest/topics/practices.html#run-scrapy-from-a-script))
   + この場合は、settings.py による、設定の初期化はされていないようである。
   + これは[Settings](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.settings.Settings)に設定して、それをCrawlerProcessに引き渡すことで行う。
@@ -75,10 +78,29 @@ scrapy は Twisted asynchronous networking library を使用しており、そ�
 そのため、逐次的に処理する場合は、defer.inlineCallbacks 修飾子を使用して、実行手順を示した上で、まとめて実行するらしい。  
 詳細は [Running multiple spiders in the same process](https://doc.scrapy.org/en/latest/topics/practices.html#running-multiple-spiders-in-the-same-process) 参照
 
-crawlするサイトを動的に変更するには、定義した　CrawlSpider　のサブクラス内に設定している、allowed_domains と　start_urls に設定すればよいらしい。
+なお、[CrawlerProcess](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.crawler.CrawlerProcess)の
+[start](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.crawler.CrawlerProcess.start)で、
+stop_after_crawl=False とすれば良いというQA
+([ReactorNotRestartable error in while loop with scrapy](https://stackoverflow.com/questions/39946632/reactornotrestartable-error-in-while-loop-with-scrapy))
+もあったが、上手く行かなかった。(止まってしまう)  
+少なくとも、マニュアルにかかれているのは、前述の方法なので、それを使用するのが正しいのではないか。  
+
+crawlするサイトを動的に変更するには、定義した　CrawlSpider　のサブクラス内に設定している、allowed_domains と　start_urls に設定すればよいらしい。  
+これにより、サイトごとにクラスを定義せずにクロールを行うことができる。  
+多分、関数内で class を定義して、それを戻すことも出来る気がするが、そこまでする必要もなさそうなのでしていない。  
+また、scrapyのモジュール内では、インスタンスを経由しない参照をしているようで、コンストラクタで self.allowed_domains と self.start_urls に値を設定する方法では動作しなかった。  
 
 test01.py は、yahoo news と yahoo 天気を対象として、それらのURLとタイトルを out.csvに出力する。  
 その際、yahoo newsからすべて読み込むまで、yahoo天気の読み込みは開始しない。  
 サーバの負荷を考慮して、1sec待ち、読み込みの深さは1としている。  
 
 - [test01.py](test01.py)
+
+# TEST02
+単純に APIからscrapyを呼び出すテスト。  
+ドメイン名とURLはコマンドライン引数から受け取ることができる。(それぞれ1つだけ)  
+それ以外は TEST01と同じ。
+
+例えば、python3 test02.py  news.yahoo.co.jp https://news.yahoo.co.jp
+
+- [test02.py](test02.py)
