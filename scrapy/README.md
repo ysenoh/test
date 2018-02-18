@@ -68,9 +68,17 @@ pip3 install --upgrade google-auth-oauthlib
   + これは[Settings](https://doc.scrapy.org/en/latest/topics/api.html#scrapy.settings.Settings)に設定して、それをCrawlerProcessに引き渡すことで行う。
   + Settings も辞書型のように扱え、また辞書型のデータを与えても動作するらしいが、Settingsを使用すると名前の間違いなどを判定してくれるのだと思う。
 
+# TEST01
+複数のサイトに対して、sequentially にcrawl するテスト。  
+scrapy は Twisted asynchronous networking library を使用しており、そのエンジンをreactorと呼ぶらしい。  
+このreactorは、プロセス内では、一度止めると再起動できないらしい。  
+そのため、逐次的に処理する場合は、defer.inlineCallbacks 修飾子を使用して、実行手順を示した上で、まとめて実行するらしい。  
+詳細は [Running multiple spiders in the same process](https://doc.scrapy.org/en/latest/topics/practices.html#running-multiple-spiders-in-the-same-process) 参照
 
+crawlするサイトを動的に変更するには、定義した　CrawlSpider　のサブクラス内に設定している、allowed_domains と　start_urls に設定すればよいらしい。
 
+test01.py は、yahoo news と yahoo 天気を対象として、それらのURLとタイトルを out.csvに出力する。  
+その際、yahoo newsからすべて読み込むまで、yahoo天気の読み込みは開始しない。  
+サーバの負荷を考慮して、1sec待ち、読み込みの深さは1としている。  
 
-
-
-
+- [コード](test01.py)
