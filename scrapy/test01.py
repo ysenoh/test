@@ -38,8 +38,8 @@ class MyItem(Item):
 
 
 @defer.inlineCallbacks
-def crawl(runner, crawl_targets):
-    for domains, urls in crawl_targets:
+def crawl(runner, crawlTargets):
+    for domains, urls in crawlTargets:
         MySpider.allowed_domains = domains
         MySpider.start_urls = urls
         yield runner.crawl(MySpider)
@@ -52,10 +52,10 @@ def crawl(runner, crawl_targets):
 # 1つのプロセス内で、reactorは再起動できないっぽい事に注意。
 # https://doc.scrapy.org/en/latest/topics/practices.html#running-multiple-spiders-in-the-same-process
 
-def runCrawlerSequentially(settingVals, crawl_targets):
+def runCrawlerSequentially(settingVals, crawlTargets):
     configure_logging()
     runner = CrawlerRunner(Settings(settingVals))
-    crawl(runner, crawl_targets)
+    crawl(runner, crawlTargets)
     reactor.run()
 
 
@@ -78,10 +78,10 @@ settingVals = {
     'FEED_FORMAT': 'csv',
     'FEED_EXPORT_ENCODING': 'UTF-8'}
 
-crawl_targets = [
+crawlTargets = [
     (['news.yahoo.co.jp'], ['https://news.yahoo.co.jp/']),
     (['weather.yahoo.co.jp'], ['https://weather.yahoo.co.jp/weather/'])]
 
-runCrawlerSequentially(settingVals, crawl_targets)
+runCrawlerSequentially(settingVals, crawlTargets)
 
 
