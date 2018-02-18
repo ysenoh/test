@@ -81,4 +81,4 @@ test01.py は、yahoo news と yahoo 天気を対象として、それらのURL�
 その際、yahoo newsからすべて読み込むまで、yahoo天気の読み込みは開始しない。  
 サーバの負荷を考慮して、1sec待ち、読み込みの深さは1としている。  
 
-- [コード](test01.py)
+- [test01.py](test01.py)
